@@ -18,5 +18,9 @@
 		"host" : "your-host-address",
 		"user" : "your-user",
 		"password": "your-password"
+	},
+	"img" : {
+		"username": "your-username",
+		"password": "your-password"
 	}
 }
