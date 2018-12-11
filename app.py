@@ -1,7 +1,8 @@
 from flask import Flask, Markup, render_template, request, session, url_for, redirect
-import pymysql.cursors, datetime
+import datetime
 from sqlalchemy import create_engine
 import pandas as pd
+import json
 app = Flask(__name__)
 
 #AUTH 
