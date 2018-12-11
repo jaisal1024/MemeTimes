@@ -1,47 +1,70 @@
-﻿a.logo:link {
+﻿body {
+	margin-left: 20px;
+	margin-right: 20px;
+	background-color: white;
+}
+
+a:link {
 	text-decoration: none;
 	color: black;
 }
 
-a.logo:visited {
+a:visited {
 	text-decoration: none;
 	color: black;
 }
 
-a.logo:hover {
-	text-decoration: none;
-}
-
-a.logo:active {
-	text-decoration: none;
-}
-
-a.menu_bar:link {
-	text-decoration: none;
-	color: black;
-}
-
-a.menu_bar:visited {
+a:hover {
 	text-decoration: none;
 	color: grey;
 }
 
-a.menu_bar:hover {
-	text-decoration: underline;
-}
-
-a.menu_bar:active {
+a:active {
 	text-decoration: none;
 }
 
-.left {
+div.header,div.content {
+	margin-top: 0px;
+	margin-bottom: 0px;
 	position: relative;
-	left: 65%;
+	clear: both;
+}
+
+div.nav {
+	position: sticky;
+	position: -webkit-sticky;
+	top: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0px;
+	height: 30px;
+}
+
+.left {
+	border-right: 0 none;
+	padding: 10px;
 }
 
 .right {
+	border-left: 2px solid grey;
+	padding: 10px;
+}
+
+.absolute {
+	position: absolute;
+}
+
+.sticky {
+	position: sticky;
+	clear: both;
+}
+
+.fixed {
+	position: fixed;
+}
+
+.relative {
 	position: relative;
-	right: 35%;
 }
 
 hr {
@@ -49,29 +72,14 @@ hr {
     margin-bottom: 0px;
     margin-left: 0px;
     margin-right: 0px;
-	width: 120%;
+	width: 100%;
 	height: 2px;
 	background-color:black;
 }
 
-h1 {
-    text-align: center;
-	padding: 0px;
-	margin-bottom: 0px;
-    color: black;
-    font-family: Cinzel Decorative;
-    font-size: 38px;
-    font-weight: bold;
-}
 
-h2 {
-    margin: 5px;
-	text-align: center;
-    color: black;
-    font-family: Cormorant;
-    font-size: 100%;
-    font-weight: normal;
-}
+
+
 
 .textleft {
 	text-align: left;
@@ -85,12 +93,15 @@ h2 {
 	text-align: right;
 }
 
+.textbottom {
+	bottom: 0;
+}
+
 .info_today {
-	margin-top: 0px;
 	margin: 0px;
     color: black;
     font-family: Cormorant;
-    font-size: 100%;
+    font-size: 14px;
     font-weight: normal;
 }
 
@@ -99,12 +110,49 @@ h2 {
 	text-align: center;
     color: black;
     font-family: Cormorant;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+h1 {
+    text-align: center;
+	padding: 0px;
+	margin-bottom: 0px;
+    color: black;
+    font-family: Cormorant;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+h2 {
+    margin: 0px;
+	text-align: center;
+    color: black;
+    font-family: Cormorant;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+h3 {
+    margin: 0px;
+	text-align: center;
+    color: black;
+    font-family: Cormorant;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+
+h4  {
+	margin: 0px;
+	text-align: center;
+    color: black;
+    font-family: Cormorant;
     font-size: 100%;
     font-weight: normal;
 }
 
 p  {
-    border: 1px;
     padding: 20px;
     color: black;
     font-family: Cormorant;
@@ -112,5 +160,12 @@ p  {
 }
 
 
+footer {
+	clear: both;
+	background-color: white;
+	bottom: 20px;
+	width: 100%;
+	color: grey;
+}
 
 
