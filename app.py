@@ -3,19 +3,13 @@ import pymysql.cursors, datetime
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET', "POST"])
+@app.route('/', methods=['GET', 'POST'])
 def main():
-	return render_template('index.html')
+	userInput=request.args.getlist('userInput');
+	return render_template('askReddit.html',userInput=userInput)
 
 
 
-@app.route('/articles', methods=['GET', "POST"])
-def article():
-	return render_template('articles.html')
-
-@app.route('/meme', methods=['GET', "POST"])
-def articles():
-	return render_template('meme.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
