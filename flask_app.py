@@ -14,6 +14,9 @@ import matplotlib.pyplot as plt
 app = Flask(__name__)
 from make_plot_for import generate_lda_for
 today = datetime.now().strftime("%A, %B %d, %Y")
+from bokeh.plotting import figure, show, output_file, output_notebook
+from bokeh.palettes import Spectral11, colorblind, Inferno, BuGn, brewer
+from bokeh.models import HoverTool, value, LabelSet, Legend, ColumnDataSource,LinearColorMapper,BasicTicker, PrintfTickFormatter, ColorBar
 
 #AUTH
 with open('config.json') as f:
@@ -45,6 +48,37 @@ for index, row in df_memes_.iterrows():
     else:
         memes[0] = row["meme_url"]
 
+def create_timeline(df):
+    df['created'] = pd.to_datetime(df['created'], unit='s')
+    grouped = df.groupby(df.created.dt.date).count()
+    grouped.set_index('created')
+
+    a = pd.Series(grouped.post_id)
+    a.index = grouped.index
+    # a.plot()
+    # plt.savefig('Timeline')
+    TOOLS = "hover,save,pan,box_zoom,reset,wheel_zoom,tap"
+    p = figure(plot_height=350,
+    title="Average Number of Crimes by Month",
+    tools=TOOLS,
+    toolbar_location='above')
+
+    p.vbar(x=grouped.index, top=grouped.post_id, width=0.9)
+
+    p.y_range.start = 0
+    p.x_range.range_padding = 0.1
+    p.xgrid.grid_line_color = None
+    p.axis.minor_tick_line_color = None
+    p.outline_line_color = None
+    p.xaxis.axis_label = 'Month'
+    p.yaxis.axis_label = 'Average Crimes'
+    p.select_one(HoverTool).tooltips = [
+        ('month', '@x'),
+        ('Number of crimes', '@top'),
+    ]
+    output_file("barchart.html", title="barchart")
+    p.save()
+create_timeline(df)
 print(articles_list[0]["meme_urls"], articles_list[4]["meme_urls"])
 
 for i in range(len(articles_list)):
