@@ -69,27 +69,27 @@
 		
 			<div class="left" style="display: table-cell; width:60%;">
 				<h1 class="textleft">Today's Must Reads > <br><br></h1>
-					
-					<article class="daily">
+					  {{#each articles}}
+					  	<article class="daily">
 						<header>
 							<div class="text">
-							<h2>{{ article_title_1 }}</h2> 
+							<h2>{{ this.title }}</h2> 
 							<h3>
-								key words: {{ article_entities_1 }}
-								<a href="{{ article_url_1 }}" target="_blank">
+								key words: {{ this.keywords }}
+								<a href="{{ this.url }}" target="_blank">
 									source link
 								</a>
 							</h3>
 							
-							<img class="article_img" src="{{ image_url_1 }}" height="100px">
+							<img class="article_img" src="{{ this.image }}" height="100px">
 						</header>
 						<section class="summary">
-							<p>{{ article_summary_1 }}</p>
+							<p>{{ this.summary }}</p>
 							
 						</section>
 					</article>
-
-
+					{{/each}}
+				
 			</div>
 			
 			<div class="right" style="display: table-cell; width:40%;">
