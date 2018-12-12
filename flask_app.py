@@ -28,17 +28,25 @@ engine = create_engine("mysql://root:yankees7&@35.237.95.123:3306/MemeNews")
 
 #grab the memes & the associated article
 articles_list = []
-query = '''SELECT * FROM MemeNews.Memes'''
+query = '''SELECT * FROM MemeNews.Memes LIMIT 12'''
 df = pd.read_sql('''SELECT * FROM MemeNews.every_comment''', engine)
 df_memes_ = pd.read_sql(query, engine)
+memes = [None]*2
+i = 0
 for index, row in df_memes_.iterrows():
-    if (index %2 ==0):
+    if (index % 2 == 1):
         query = '''SELECT * FROM MemeNews.Daily_Articles WHERE id LIKE '{0}' LIMIT 1'''.format(row['post_id'])
         df_article = pd.read_sql(query, engine)
         df_dict = df_article.iloc[0].to_dict()
-        df_dict["meme_url"] = row["meme_url"]
+        memes[1] = row["meme_url"]
+        memes_copy = memes[:]
+        df_dict["meme_urls"] = memes_copy
         articles_list.append(df_dict)
-# df_dict['title'], df_dict['url'], df_dict['image'], df_dict['body']
+        df_dict = {}
+    else:
+        memes[0] = row["meme_url"]
+
+print(articles_list[0]["meme_urls"], articles_list[4]["meme_urls"])
 
 @app.route('/', methods=['GET', "POST"])
 
