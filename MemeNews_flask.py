@@ -3,9 +3,7 @@
 
 from flask import Flask, Markup, render_template, request, session, url_for, redirect
 from flask_bootstrap import Bootstrap
-from lda import return_response
-import pandas as pd
-import re
+import lda as lda
 import pymysql.cursors
 from sqlalchemy import create_engine
 import json
@@ -31,7 +29,13 @@ engine = create_engine("mysql://root:yankees7&@35.237.95.123:3306/MemeNews")
 articles_list = []
 query = '''SELECT * FROM MemeNews.Memes LIMIT 3'''
 df = pd.read_sql('''SELECT * FROM MemeNews.every_comment''', engine)
+df = pd.read_sql('''SELECT * FROM MemeNews.every_article''', engine)
+
 df_memes_ = pd.read_sql(query, engine)
+
+# lda.lda(df[:100])
+# lda.lda(df_articles{:100})
+
 for index, row in df_memes_.iterrows():
     if (index %2 ==0):
         query = '''SELECT * FROM MemeNews.Daily_Articles WHERE id LIKE '{0}' LIMIT 1'''.format(row['post_id'])
