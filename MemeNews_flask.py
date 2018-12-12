@@ -51,21 +51,14 @@ def home():
         a = pd.Series(grouped.post_id)
         a.index = grouped.index
         a.plot()
-        timeline = plt.savefig('Timeline')
+        plt.savefig('images/Timeline.png')
+        
     
-        con = engine.connect()
-        con.close()
-
-        # return render_template("MemeNews.htm", date = today, 
-        #                        article_title_1 = df_dict['title'],
-        #                        image_url_1 = df_dict['image'],
-        #                        article_entities_1 = df_dict['keywords'],
-        #                        article_url_1 = df_dict['url'],
-        #                        article_summary_1 = df_dict['summary'],
-        #                        timeline = timeline)
+    con = engine.connect()
+    con.close()
 
 
-        return render_template("MemeNews.htm", date = today, 
+    return render_template("MemeNews.htm", date = today, 
                                df_dict=df_dict,
                                timeline = timeline)
 
@@ -111,7 +104,7 @@ def chatReddit():
 	if userInput:
 		output=return_response(userInput)
 		chatHistory[userInput]=output
-	return render_template('MemeNews_askReddit.html',userInput=userInput, output=output,chatHistory=chatHistory, date = today)
+	return render_template('MemeNews_askReddit.html',userInput=userInput, output=output, chatHistory=chatHistory, date = today)
 		
 
 @app.route('/Subscribe')
