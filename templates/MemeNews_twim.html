@@ -5,15 +5,19 @@
 
         <title>MemeTimes.com</title>
 
-		<link rel="stylesheet" href="{{ url_for('static',filename='css/MemeNews_ss.css') }}" type="text/css">
+
+		<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="{{ url_for('static',filename='css/MemeNews_ss.css') }}" type="text/css">
 		<link href="https://fonts.googleapis.com/css?family=Alegreya|Alike|Aref+Ruqaa|Cinzel|Cinzel+Decorative|Cookie|Cormorant|El+Messiri|Forum|Gilda+Display|IM+Fell+Double+Pica|Julius+Sans+One|Norican|Noto+Serif+SC|Petit+Formal+Script|Rasa" rel="stylesheet">
-		<script src="{{url_for('static', filename='javascript/MemeNews.js')}}"></script>
-    
+<script src="{{url_for('static', filename='javascript/MemeNews.js')}}">
+		</script>
+
     </head>
-    
+
     <body>
 		<div class="header">
-			<table style="height:50px; width:100%; border-bottom:1px solid grey; "> 
+			<table style="height:50px; width:100%; border-bottom:1px solid grey; ">
 				<tr class="info_today" style="background-color: white">
 					<th class="textleft textbottom" style="width: 45%">
 						{{ date }}
@@ -31,34 +35,45 @@
 				</tr>
 			</table>
 		</div>
-			
+
 		<div class="nav">
-			<table style="width:100%; background-color:white; border-top: 2px solid white; border-bottom: 3px double black"> 
-				<tr height='fixed'>
+			<table style="width:100%; background-color:white; border-top: 2px solid white; border-bottom: 3px double black">
+				<tr style="height: fixed">
 					<th class="textcenter">
 						<a class="menu_bar hide sticky" href="/">
 							<img src="{{ url_for('static',filename='images/logo_simple.png') }}" height="16px">
 						</a>
 					</th>
 					<th class="textcenter"><a class="menu_bar" href="PastArticles">Past Articles</a></th>
-					<th class="textcenter"><a class="menu_bar" href="TheWorldInMemes">The World in Memes</a></th>
-					<th class="textcenter"><a class="menu_bar" href="MemeAnalysis">Meme Analysis</a></th>
+
+					<th class="textcenter">
+						<div class="dropdown">
+							<button class="menu_bar dropbtn" style="height: 15px;">Meme Analysis</button>
+							<div class="dropdown-content">
+								<a href="MemeAnalysis_Articles">
+									Articles</a>
+								<a  href="MemeAnalysis_Comments">
+									Comments</a>
+							</div>
+						</div>
+					</th>
 					<th class="textcenter"><a class="menu_bar" href="AboutUs">About Us</a></th>
-					<th class="textcenter"><a class="menu_bar" >Ask Reddit</a></th>
+
+					<th class="textcenter"><a class="menu_bar" href="AskReddit">Ask Reddit</a></th>
 				</tr>
 			</table>
 		</div>
-			
+
 		<div class="content">
-		
+
 	    <p>Meme of the day</p>
-	
+
 
 
 		</div>
 		<footer>
 			<table style="width: 100%; border-top: 3px double black;">
-				<tr> 
+				<tr>
 					<td style="left: 0; text-align: left; width: 50%">
 						© 2018 The MemeTimes Company
 					</td>
@@ -76,6 +91,6 @@
 			<br>
 		</footer>
     </body>
-	
-	
+
+
 </html>

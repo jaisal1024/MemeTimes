@@ -1,4 +1,70 @@
 
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <title>MemeTimes.com</title>
+
+
+		<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="{{ url_for('static',filename='css/MemeNews_ss.css') }}" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Alegreya|Alike|Aref+Ruqaa|Cinzel|Cinzel+Decorative|Cookie|Cormorant|El+Messiri|Forum|Gilda+Display|IM+Fell+Double+Pica|Julius+Sans+One|Norican|Noto+Serif+SC|Petit+Formal+Script|Rasa" rel="stylesheet">
+<script src="{{url_for('static', filename='javascript/MemeNews.js')}}">
+		</script>
+
+    </head>
+
+    <body>
+		<div class="header">
+			<table style="height:50px; width:100%; border-bottom:1px solid grey; ">
+				<tr class="info_today" style="background-color: white">
+					<th class="textleft textbottom" style="width: 45%">
+						{{ date }}
+					</th>
+					<th style="width: 10%">
+						<a class="logo" href="/">
+							<img src="{{ url_for('static',filename='images/logo.png') }}" alt="MemeNews Logo. Click to visit the homepage" height="50px" align="middle">
+						</a>
+					</th>
+					<th class="textright textbottom" style="width: 45%">
+						<a class="pop_up" href="Subscribe">
+							Subscribe
+						</a>
+					</th>
+				</tr>
+			</table>
+		</div>
+
+		<div class="nav">
+			<table style="width:100%; background-color:white; border-top: 2px solid white; border-bottom: 3px double black">
+				<tr style="height: fixed">
+					<th class="textcenter">
+						<a class="menu_bar hide sticky" href="/">
+							<img src="{{ url_for('static',filename='images/logo_simple.png') }}" height="16px">
+						</a>
+					</th>
+					<th class="textcenter"><a class="menu_bar" href="PastArticles">Past Articles</a></th>
+
+					<th class="textcenter">
+						<div class="dropdown">
+							<button class="menu_bar dropbtn" style="height: 15px;">Meme Analysis</button>
+							<div class="dropdown-content">
+								<a href="MemeAnalysis_Articles">
+									Articles</a>
+								<a  href="MemeAnalysis_Comments">
+									Comments</a>
+							</div>
+						</div>
+					</th>
+					<th class="textcenter"><a class="menu_bar" href="AboutUs">About Us</a></th>
+
+					<th class="textcenter"><a class="menu_bar" href="AskReddit">Ask Reddit</a></th>
+				</tr>
+			</table>
+		</div>
+
 <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/bmabey/pyLDAvis/files/ldavis.v1.0.0.css">
 
 
@@ -39,3 +105,28 @@ if(typeof(LDAvis) !== "undefined"){
          });
 }
 </script>
+
+
+		<footer>
+			<table style="width: 100%; border-top: 3px double black;">
+				<tr>
+					<td style="left: 0; text-align: left; width: 50%">
+						© 2018 The MemeTimes Company
+					</td>
+					<td style="text-align: right; width: 25%">
+						<a href="TermsOfService">
+						Terms of Service</a>
+					</td>
+					<td style="text-align: right; width: 15%">
+						<a href="SiteMap">
+						Site Map</a>
+					</td>
+					<td style="width:10%"></td>
+				</tr>
+			</table>
+			<br>
+		</footer>
+    </body>
+
+
+</html>
