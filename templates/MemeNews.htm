@@ -3,29 +3,28 @@
 
     <head>
 
-        <title>MemeNews.com</title>
+        <title>MemeTimes.com</title>
 
 		<link rel="stylesheet" href="{{ url_for('static',filename='css/MemeNews_ss.css') }}" type="text/css">
-		<link href="https://fonts.googleapis.com/css?family=Alegreya|Alike|Aref+Ruqaa|Cinzel|Cinzel+Decorative|Cookie|Cormorant|El+Messiri|Forum|Gilda+Display|IM+Fell+Double+Pica|Julius+Sans+One|Norican|Noto+Serif+SC|Petit+Formal+Script|Rasa" rel="stylesheet">
-		<script src="{{url_for('static', filename='javascript/MemeNews.js')}}"></script>
+		<link href="https://fonts.googleapis.com/css?family=Alegreya|Alike|Aref+Ruqaa|Cinzel|Cinzel+Decorative|Cookie|Cormorant|El+Messiri|Forum|Gilda+Display|IM+Fell+Double+Pica|Julius+Sans+One|Norican|Noto+Serif+SC|Petit+Formal+Script|Rasa" rel="stylesheet">		<script src="{{url_for('static', filename='javascript/MemeNews.js')}}"></script>
     
     </head>
     
     <body>
 		<div class="header">
 			<table style="height:50px; width:100%; border-bottom:1px solid grey; "> 
-				<tr class="info_today" style="background-color: white;">
-					<th class="textleft textbottom">
+				<tr class="info_today" style="background-color: white">
+					<th class="textleft textbottom" style="width: 45%">
 						{{ date }}
 					</th>
-					<th>
+					<th style="width: 10%">
 						<a class="logo" href="/">
 							<img src="{{ url_for('static',filename='images/logo.png') }}" alt="MemeNews Logo. Click to visit the homepage" height="50px" align="middle">
 						</a>
 					</th>
-					<th class="textright textbottom">
+					<th class="textright textbottom" style="width: 45%">
 						<a class="pop_up" href="Subscribe">
-						Subscribe
+							Subscribe
 						</a>
 					</th>
 				</tr>
@@ -42,63 +41,79 @@
 					</th>
 					<th class="textcenter"><a class="menu_bar" href="PastArticles">Past Articles</a></th>
 					<th class="textcenter"><a class="menu_bar" href="TheWorldInMemes">The World in Memes</a></th>
-					<th class="textcenter"><a class="menu_bar" href="MemeAnalysis">Meme Analysis</a></th>
+					<th class="textcenter">
+						<div class="dropdown">
+							<button class="menu_bar dropbtn">Meme Analysis</button>
+							<div class="dropdown-content">
+								<a href="MemeAnalysis_Articles">
+									Articles</a>
+								<a  href="MemeAnalysis_Comments">
+									Comments</a>
+							</div>
+						</div>
+					</th>
 					<th class="textcenter"><a class="menu_bar" href="AboutUs">About Us</a></th>
+
+					<th class="textcenter"><a class="menu_bar" href="AskReddit">Ask Reddit</a></th>
 				</tr>
 			</table>
 		</div>
 				
-		<section class="timeline" style="height: 200px;">
-			<p>(This is the timeline)</p>	
+		<section class="timeline" style="padding: 10px; height: 200px; border-bottom: 3px double black">
+			<br>
+			<h1 class="textleft">History in the Headlines > <br><br></h1>
+			<p>{{ timeline }}</p>	
 		</section>
-			
-		<hr>
-			
+
 		<div class="content" style="display: table-row; width:100%;">
 		
 			<div class="left" style="display: table-cell; width:60%;">
-				<h1 class="textleft">Today's Must Reads > </h1>
+				<h1 class="textleft">Today's Must Reads > <br><br></h1>
 					
-					<article class="main">
+					<article class="daily">
 						<header>
-							<h2>article title{{ top_article_title }}</h2>
-							<h3>article author{{ top_article_author }}</h3>
-							<img class="image" src="{{ top_article_imageurl }}" height="60px">
+							<div class="text">
+							<h2>{{ article_title_1 }}</h2> 
+							<h3>
+								key words: {{ article_entities_1 }}
+								<a href="{{ article_url_1 }}" target="_blank">
+									source link
+								</a>
+							</h3>
+							
+							<img class="article_img" src="{{ image_url_1 }}" height="100px">
 						</header>
 						<section class="summary">
-							<p>content...{{ top_article_summary }}</p>
+							<p>{{ article_summary_1 }}</p>
 							
 						</section>
 					</article>
-					
-					<article class="">
-					</article>
+
+
 			</div>
 			
 			<div class="right" style="display: table-cell; width:40%;">
-				<h1 class="textleft">Topics of the Day > </h1>
-				
-				<h2>
-					most appeared entity{{ most_appeared_entity }}
-				</h2>
-				
-				<p>
-				graph? and repeat?<br>
-				<br><br><br><br><br><br><br><br>
-				
-				<br><br><br><br><br><br><br><br>
-				<br><br><br><br><br><br><br><br>
-				</p>
-			
+				<h1 class="textleft">Topics of the Day > <br><br></h1>
+				<article class="daily">
+					<h2>
+						[most appeared entity]{{ most_appeared_entity }}
+					</h2>
+					
+					<p>
+					graph? and repeat?<br>
+					<br><br><br><br><br><br><br><br>
+					
+					<br><br><br><br><br><br><br><br>
+					<br><br><br><br><br><br><br><br>
+					</p>
+				</article>
 			</div>
 		</div>
 	
 		
 		
 		<footer>
-			<hr style="border: 0 none; width: 100%; border-top: 2px double grey">
-			<br>
-			<table style="width: 100%">
+			<table style="width: 100%; border-top: 3px double black;">
 				<tr> 
 					<td style="left: 0; text-align: left; width: 50%">
 						© 2018 The MemeTimes Company

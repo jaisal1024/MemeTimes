@@ -1,23 +1,20 @@
-from flask import Flask, Markup, render_template, request, session, url_for, redirect
-import pymysql.cursors, datetime
-app = Flask(__name__)
-
-'''
-@app.route('/', methods=['GET', "POST"])
-def main():
-	return render_template('index.html')
+from lda import return_response
 
 
 
-@app.route('/articles', methods=['GET', "POST"])
-def article():
-	return render_template('articles.html')
-'''
 
-
-@app.route('/meme', methods=['GET', "POST"])
-def articles():
-	return render_template('MemeNews.htm')
-
-if __name__ == "__main__":
-    app.run(debug=True)
+chatHistory={}
+@app.route('/AskReddit', methods=['GET', 'POST'])
+def askReddit():
+	return render_template('MemeNews_askReddit.html', chatHistory=chatHistory)
+@app.route('/ChatReddit', methods=['GET', 'POST'])
+def chatReddit():	
+	if request.method== 'GET':
+		return redirect('/AskReddit')
+	userInput=request.form['userInput']
+	output="Huh, you don't want to talk!?"
+	if userInput:
+		output=return_response(userInput)
+		chatHistory[userInput]=output
+	return render_template('MemeNews_askReddit.html',userInput=userInput, output=output,chatHistory=chatHistory)
+		
