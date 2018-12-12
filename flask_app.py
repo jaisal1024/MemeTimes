@@ -31,7 +31,7 @@ engine = create_engine("mysql://root:yankees7&@35.237.95.123:3306/MemeNews")
 
 #grab the memes & the associated article
 articles_list = []
-query = '''SELECT * FROM MemeNews.Memes LIMIT 12'''
+query = '''SELECT * FROM MemeNews.Memes ORDER BY post_id LIMIT 10'''
 df = pd.read_sql('''SELECT * FROM MemeNews.every_comment''', engine)
 df['created'] = pd.to_datetime(df['created'], unit='s')
 df_memes_ = pd.read_sql(query, engine)
@@ -51,14 +51,14 @@ for index, row in df_memes_.iterrows():
         memes[0] = row["meme_url"]
 
 def create_timeline(df):
-    
+
     df['created'] = pd.to_datetime(df['created'], unit='s')
     grouped = df.groupby(df.created.dt.date).count()
     grouped.set_index('created')
 
     a = pd.Series(grouped.post_id)
     a.index = grouped.index
-    
+
     # a.plot()
     # plt.savefig('Timeline')
     TOOLS = "hover,save,pan,box_zoom,reset,wheel_zoom,tap"
@@ -163,11 +163,11 @@ def chatReddit():
 @app.route('/Subscribe', methods=["GET", "POST"])
 def MemeNews_subscribe():
     if request.method=='GET':
-        return render_template("MemeNews_subscribe.html", date = today)   
+        return render_template("MemeNews_subscribe.html", date = today)
     elif request.method=='POST':
         return render_template("MemeNews_subscribe.html", date= today, thanks='Thank you for subscribing to MemeTimes newsletter!')
 
-    
+
 
 @app.route('/TermsOfService')
 def MemeNews_tos():
@@ -178,4 +178,4 @@ def MemeNews_sm():
     return render_template("MemeNews_sm.html", date = today)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='localhost', port=5000, debug=True)

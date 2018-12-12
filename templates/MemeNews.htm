@@ -5,11 +5,11 @@
 
         <title>MemeTimes.com</title>
 
-	
+
 		<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" href="{{ url_for('static',filename='css/MemeNews_ss.css') }}" type="text/css">
-		<link href="https://fonts.googleapis.com/css?family=Alegreya|Alike|Aref+Ruqaa|Cinzel|Cinzel+Decorative|Cookie|Cormorant|El+Messiri|Forum|Gilda+Display|IM+Fell+Double+Pica|Julius+Sans+One|Norican|Noto+Serif+SC|Petit+Formal+Script|Rasa" rel="stylesheet">		
+		<link href="https://fonts.googleapis.com/css?family=Alegreya|Alike|Aref+Ruqaa|Cinzel|Cinzel+Decorative|Cookie|Cormorant|El+Messiri|Forum|Gilda+Display|IM+Fell+Double+Pica|Julius+Sans+One|Norican|Noto+Serif+SC|Petit+Formal+Script|Rasa" rel="stylesheet">
 <script src="{{url_for('static', filename='javascript/MemeNews.js')}}">
 		</script>
 
@@ -67,7 +67,7 @@
 		<section class="timeline" style="padding: 10px; height: 200px; border-bottom: 3px double black">
 			<br>
 			<h1 class="textleft">History in the Headlines > <br><br></h1>
-			<p><img src="{{ url_for('static',filename='images/Timeline.png') }}" alt="Timeline" height="200px" align="middle">
+			<p><img style="margin: auto;" src="{{ url_for('static',filename='images/Timeline.png') }}" alt="Timeline" height="200px" align="middle">
 			</p>
 		</section>
 
@@ -92,16 +92,16 @@
 						</br>
             <!-- </div> -->
 						</header>
-						
+
             <section class="summary row">
               <p>{{ article.summary }}</p>
 						</section>
 						<!-- <div class='row'> -->
-								<img class="row" src="{{article.meme_url}}" style="width:60%;height:60%;">
+							<a href="{{article.meme_urls[0]}}">	<img class="row" src="{{article.meme_urls[0]}}" style="width:60%;height:60%;"></a>
 						<!-- </div> -->
-						
+
           </article>
-          
+
           {% endfor %}
       </div>
 
