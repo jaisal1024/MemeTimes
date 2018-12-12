@@ -5,6 +5,7 @@ from flask import Flask, Markup, render_template, request, session, url_for, red
 from flask_bootstrap import Bootstrap
 from lda import return_response
 import pandas as pd
+from bokeh.io import save
 import re
 from sqlalchemy import create_engine
 import json
@@ -32,6 +33,7 @@ engine = create_engine("mysql://root:yankees7&@35.237.95.123:3306/MemeNews")
 articles_list = []
 query = '''SELECT * FROM MemeNews.Memes LIMIT 12'''
 df = pd.read_sql('''SELECT * FROM MemeNews.every_comment''', engine)
+df['created'] = pd.to_datetime(df['created'], unit='s')
 df_memes_ = pd.read_sql(query, engine)
 memes = [None]*2
 i = 0
@@ -49,35 +51,38 @@ for index, row in df_memes_.iterrows():
         memes[0] = row["meme_url"]
 
 def create_timeline(df):
+    
     df['created'] = pd.to_datetime(df['created'], unit='s')
     grouped = df.groupby(df.created.dt.date).count()
     grouped.set_index('created')
 
     a = pd.Series(grouped.post_id)
     a.index = grouped.index
+    
     # a.plot()
     # plt.savefig('Timeline')
     TOOLS = "hover,save,pan,box_zoom,reset,wheel_zoom,tap"
     p = figure(plot_height=350,
-    title="Average Number of Crimes by Month",
+    title="Daily number of comments",
     tools=TOOLS,
     toolbar_location='above')
+    # print(a.columns)
 
-    p.vbar(x=grouped.index, top=grouped.post_id, width=0.9)
+    p.vbar(x=a.index, top=a.values, width=2)
 
     p.y_range.start = 0
     p.x_range.range_padding = 0.1
     p.xgrid.grid_line_color = None
     p.axis.minor_tick_line_color = None
     p.outline_line_color = None
-    p.xaxis.axis_label = 'Month'
-    p.yaxis.axis_label = 'Average Crimes'
+    p.xaxis.axis_label = 'Day'
+    p.yaxis.axis_label = 'Comments'
     p.select_one(HoverTool).tooltips = [
         ('month', '@x'),
-        ('Number of crimes', '@top'),
+        ('Number of comments', '@top'),
     ]
     output_file("barchart.html", title="barchart")
-    p.save()
+    save(p)
 create_timeline(df)
 print(articles_list[0]["meme_urls"], articles_list[4]["meme_urls"])
 
