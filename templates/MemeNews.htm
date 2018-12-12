@@ -5,8 +5,13 @@
 
         <title>MemeTimes.com</title>
 
-		<link rel="stylesheet" href="{{ url_for('static',filename='css/MemeNews_ss.css') }}" type="text/css">
-		<link href="https://fonts.googleapis.com/css?family=Alegreya|Alike|Aref+Ruqaa|Cinzel|Cinzel+Decorative|Cookie|Cormorant|El+Messiri|Forum|Gilda+Display|IM+Fell+Double+Pica|Julius+Sans+One|Norican|Noto+Serif+SC|Petit+Formal+Script|Rasa" rel="stylesheet">		<script src="{{url_for('static', filename='javascript/MemeNews.js')}}"></script>
+	
+		<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="{{ url_for('static',filename='css/MemeNews_ss.css') }}" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Alegreya|Alike|Aref+Ruqaa|Cinzel|Cinzel+Decorative|Cookie|Cormorant|El+Messiri|Forum|Gilda+Display|IM+Fell+Double+Pica|Julius+Sans+One|Norican|Noto+Serif+SC|Petit+Formal+Script|Rasa" rel="stylesheet">		
+<script src="{{url_for('static', filename='javascript/MemeNews.js')}}">
+		</script>
 
     </head>
 
@@ -66,12 +71,13 @@
 			</p>
 		</section>
 
-		<div class="content" style="display: table-row; width:100%;">
+		<div class="content container" style="display: table-row; width:100%;">
 
       <div class="left" style="display: table-cell; width:60%;">
         <h1 class="textleft">Today's Must Reads > <br><br></h1>
             {% for article in articles_list %}
-              <article class="daily">
+              <article class="daily panel panel-body">
+
             <header>
               <div class="text">
               <h2>{{ article.title }}</h2>
@@ -80,16 +86,22 @@
                 <a href="{{ article.url }}" target="_blank">
                   source link
                 </a>
-              </h3>
-              <img class="article_img" src="{{ article.image }}" height="100px">
-            </div>
-            </header>
-            <section class="summary">
+							</h3>
+							<!-- <div class='row'> -->
+							<img class="article_img" src="{{ article.image }}" height="100px">
+						</br>
+            <!-- </div> -->
+						</header>
+						
+            <section class="summary row">
               <p>{{ article.summary }}</p>
-
-            </section>
+						</section>
+						<!-- <div class='row'> -->
+								<img class="row" src="{{article.meme_url}}" style="width:60%;height:60%;">
+						<!-- </div> -->
+						
           </article>
-          <img class="article_img" src="{{article.meme_url}}" height="150px">
+          
           {% endfor %}
       </div>
 

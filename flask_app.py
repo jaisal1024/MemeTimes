@@ -11,9 +11,8 @@ import json
 import os
 from datetime import datetime
 import matplotlib.pyplot as plt
-
 app = Flask(__name__)
-
+from make_plot_for import generate_lda_for
 today = datetime.now().strftime("%A, %B %d, %Y")
 
 #AUTH
@@ -22,7 +21,7 @@ with open('config.json') as f:
 reddit_cred = data['Reddit']
 watson_cred = data['Watson']
 newspaper_cred = data['News']
-img_cred = data["img"]
+# img_cred = data["img"]
 
 engine = create_engine("mysql://root:yankees7&@35.237.95.123:3306/MemeNews")
 
@@ -40,8 +39,18 @@ for index, row in df_memes_.iterrows():
         articles_list.append(df_dict)
 # df_dict['title'], df_dict['url'], df_dict['image'], df_dict['body']
 
-@app.route('/', methods=['GET', "POST"])
+for i in range(len(articles_list)):
+    post_id = articles_list[i]['id']
+    df_article = df[df['post_id']==post_id]
+    if df_article.shape[0] <= 5000:
+        continue
+    else:
+        plot_name = generate_lda_for(df_article, 'article'+str(post_id), 15)
+        print(plot_name)
+        articles_list[i]['plot'] = plot_name
+    # print(articles_list[i].keys())
 
+@app.route('/', methods=['GET', "POST"])
 def home():
 #     def create_timeline(df):
     df['created'] = pd.to_datetime(df['created'], unit='s')

@@ -7,7 +7,7 @@ import numpy as np
 import requests
 import requests.auth
 import pandas as pd
-def generate_lda_for(df, nameofplot, numberoftopics):
+def generate_lda_for(df, nameofplot, num_topics):
     numberoftopics = 30
     def docs_preprocessor(docs):
         tokenizer = RegexpTokenizer(r'\w+')
@@ -27,6 +27,7 @@ def generate_lda_for(df, nameofplot, numberoftopics):
 
         return docs
     docs = docs_preprocessor(list(df.body))
+    print(docs)
     from gensim.models import Phrases
     # Add bigrams and trigrams to docs (only ones that appear 10 times or more).
     bigram = Phrases(docs, min_count=10)
@@ -59,17 +60,17 @@ def generate_lda_for(df, nameofplot, numberoftopics):
 
     # def check_number_topics(num_topics):
     #     print('Current number of topics:'+str(num_topics))
-#     num_topics = 30
+    # num_topics = 30
     chunksize = 500 # size of the doc looked at every pass
     passes = 20 # number of passes through documents
     iterations = 400
     eval_every = 1  # Don't evaluate model perplexity, takes too much time.
 
     # Make a index to word dictionary.
-    temp = dictionary[0]  # This is only to "load" the dictionary.
+    # temp = dictionary[0]  # This is only to "load" the dictionary.
     id2word = dictionary.id2token
 
-    %time model = LdaModel(corpus=corpus, id2word=id2word, chunksize=chunksize, \
+    model = LdaModel(corpus=corpus, id2word=id2word, chunksize=chunksize, \
                            alpha='auto', eta='auto', \
                            iterations=iterations, num_topics=num_topics, \
                            passes=passes, eval_every=eval_every)
@@ -134,3 +135,4 @@ def generate_lda_for(df, nameofplot, numberoftopics):
     warnings.filterwarnings("ignore", category=DeprecationWarning) 
     p = pyLDAvis.gensim.prepare(model, corpus, dictionary)
     pyLDAvis.save_html(p, str(nameofplot)+'.html')
+    return(str(nameofplot)+'.html')
