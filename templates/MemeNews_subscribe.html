@@ -49,18 +49,36 @@
 		</div>
 			
 		
-		<div class="content">
-
-				<p>Subscribe to our mailing list</p>
+		
+          <div class="container" style="background-color: silver; margin: 20% auto auto auto; padding-top: 10px;">
+			<form method="POST" action="/Subscribe">
+			  <div class="form-group">
+			    <label for="exampleFormControlInput1">Email Address*</label>
+			    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="trump@whitehouse.com" required>
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleFormControlInput2">First Name*</label>
+			    <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Donald" required>
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleFormControlInput3">Last Name*</label>
+			    <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="Trump" required>
+			  </div>
+			  
+			  <div class="form-group">
+			    <label for="exampleFormControlTextarea4">Any comments on the website(optional)</label>
+			    <textarea class="form-control" id="exampleFormControlTextarea4" rows="3"></textarea>
+			  </div>
+			  <button class="btn btn-primary btn-lg">Submit</button>
+			</form>
+			{% if thanks %}
+			<div class="alert alert-success" role="alert">
+				{{ thanks }}
+			</div>
 			
-				<form action="/action_page.php" autocomplete="on">
-					First name:<input type="text" name="fname"><br>
-					Last name: <input type="text" name="lname"><br>
-					E-mail: <input type="email" name="email" autocomplete="off"><br>
-					<input type="submit">
-				</form>
-
+			{% endif %}
 		</div>
+
 		
 		<footer>
 			<table style="width: 100%; border-top: 3px double black;">

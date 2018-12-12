@@ -104,9 +104,14 @@ def chatReddit():
 	return render_template('MemeNews_askReddit.html',userInput=userInput, output=output,chatHistory=chatHistory, date = today)
 
 
-@app.route('/Subscribe')
+@app.route('/Subscribe', methods=["GET", "POST"])
 def MemeNews_subscribe():
-    return render_template("MemeNews_subscribe.html", date = today)
+    if request.method=='GET':
+        return render_template("MemeNews_subscribe.html", date = today)   
+    elif request.method=='POST':
+        return render_template("MemeNews_subscribe.html", date= today, thanks='Thank you for subscribing to MemeTimes newsletter!')
+
+    
 
 @app.route('/TermsOfService')
 def MemeNews_tos():
