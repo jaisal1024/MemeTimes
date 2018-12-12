@@ -25,11 +25,13 @@ engine = create_engine(conn_string)
 #grab the memes & the associated article
 query = '''SELECT * FROM MemeNews.Memes'''
 df_memes_ = pd.read_sql(query, engine)
+df_dict = {}
 for index, row in df_memes_.iterrows():
     if (index %2 ==0): 
         query = '''SELECT * FROM MemeNews.Daily_Articles WHERE id LIKE '{0}' LIMIT 1'''.format(row['post_id'])
         df_article = pd.read_sql(query, engine)
-        print(df_article['title'], df_article['image'], df_article['keywords'], df_article['url'], df_article['summary'])
+        df_dict = df_article.iloc[0].to_dict()
+        print(df_dict['title'], df_dict['url'], df_dict['image'], df_dict['body'])
         
 
 @app.route('/', methods=['GET', "POST"])
