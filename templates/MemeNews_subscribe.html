@@ -51,8 +51,9 @@
 			
 		
 		
-          <div class="container" style="background-color: silver; margin: 20% auto auto auto; padding-top: 10px;">
-			<form method="POST" action="/Subscribe">
+          <div class="container" style="background-color: #DCDCDC; margin: 12% 20% auto 10%; padding-top: 10px;">
+          	<h2 style="text-align: center;"> Subscibe to Mime Times Newsletter!</h2>
+			<form method="POST" action="/Subscribe" style="max-width: 50%; margin: auto 20% auto 25%;" class="justify-content-center">
 			  <div class="form-group">
 			    <label for="exampleFormControlInput1">Email Address*</label>
 			    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="trump@whitehouse.com" required>
@@ -68,12 +69,12 @@
 			  
 			  <div class="form-group">
 			    <label for="exampleFormControlTextarea4">Any comments on the website(optional)</label>
-			    <textarea class="form-control" id="exampleFormControlTextarea4" rows="3"></textarea>
+			    <textarea class="form-control" id="exampleFormControlTextarea4" rows="3" placeholder="Meme Times is amazing!!!"></textarea>
 			  </div>
-			  <button class="btn btn-primary btn-lg">Submit</button>
+			  <button class="btn btn-primary btn-md">Submit</button>
 			</form>
 			{% if thanks %}
-			<div class="alert alert-success" role="alert">
+			<div class="alert alert-success" style="max-width: 50%; margin: auto 20% auto 25%;" role="alert">
 				{{ thanks }}
 			</div>
 			
