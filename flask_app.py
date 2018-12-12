@@ -6,7 +6,6 @@ from flask_bootstrap import Bootstrap
 from lda import return_response
 import pandas as pd
 import re
-import pymysql.cursors
 from sqlalchemy import create_engine
 import json
 import os
@@ -29,7 +28,7 @@ engine = create_engine("mysql://root:yankees7&@35.237.95.123:3306/MemeNews")
 
 #grab the memes & the associated article
 articles_list = []
-query = '''SELECT * FROM MemeNews.Memes LIMIT 3'''
+query = '''SELECT * FROM MemeNews.Memes'''
 df = pd.read_sql('''SELECT * FROM MemeNews.every_comment''', engine)
 df_memes_ = pd.read_sql(query, engine)
 for index, row in df_memes_.iterrows():
@@ -37,10 +36,14 @@ for index, row in df_memes_.iterrows():
         query = '''SELECT * FROM MemeNews.Daily_Articles WHERE id LIKE '{0}' LIMIT 1'''.format(row['post_id'])
         df_article = pd.read_sql(query, engine)
         df_dict = df_article.iloc[0].to_dict()
+        df_dict["meme_url"] = row["meme_url"]
         articles_list.append(df_dict)
+# df_dict['title'], df_dict['url'], df_dict['image'], df_dict['body']
 
 @app.route('/', methods=['GET', "POST"])
+
 def home():
+#     def create_timeline(df):
     df['created'] = pd.to_datetime(df['created'], unit='s')
     grouped = df.groupby(df.created.dt.date).count()
     grouped.set_index('created')
@@ -54,7 +57,7 @@ def home():
     con.close()
 
     return render_template("MemeNews.htm", date = today,
-                           df_dict=articles_list,
+                           articles_list=articles_list,
                            timeline = timeline)
 
 @app.route('/Article')
@@ -114,4 +117,4 @@ def MemeNews_sm():
     return render_template("MemeNews_sm.html", date = today)
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

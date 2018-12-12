@@ -3,7 +3,7 @@ import numpy as np
 import requests
 import requests.auth
 import pandas as pd
-from newspaper import Article 
+from newspaper import Article
 import praw
 import json
 import matplotlib.pyplot as plt
@@ -21,9 +21,9 @@ sql_cred = data['SQL']
 
 from sqlalchemy import create_engine
 conn_string = 'mysql://{user}:{password}@{host}/{db}?charset=utf8mb4'.format(
-    host = sql_cred["host"], 
+    host = sql_cred["host"],
     user = sql_cred["user"],
-    password = sql_cred["password"], 
+    password = sql_cred["password"],
     db = 'MemeNews')
 engine = create_engine(conn_string)
 
@@ -72,11 +72,9 @@ def most_similar(x, Z, top_n=5):
     pairs = enumerate(dists[0])
     most_similar = sorted(pairs, key=lambda item: item[1])[:top_n]
     return most_similar
- 
+
 def return_response(text):
 	x = lda.transform(tf_vectorizer.transform([text]))[0]
 	similarities = most_similar(x, x_lda)
 	document_id, similarity = similarities[0]
 	return documents[document_id][:1000]
-
-

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
     <head>
@@ -7,12 +7,12 @@
 
 		<link rel="stylesheet" href="{{ url_for('static',filename='css/MemeNews_ss.css') }}" type="text/css">
 		<link href="https://fonts.googleapis.com/css?family=Alegreya|Alike|Aref+Ruqaa|Cinzel|Cinzel+Decorative|Cookie|Cormorant|El+Messiri|Forum|Gilda+Display|IM+Fell+Double+Pica|Julius+Sans+One|Norican|Noto+Serif+SC|Petit+Formal+Script|Rasa" rel="stylesheet">		<script src="{{url_for('static', filename='javascript/MemeNews.js')}}"></script>
-    
+
     </head>
-    
+
     <body>
 		<div class="header">
-			<table style="height:50px; width:100%; border-bottom:1px solid grey; "> 
+			<table style="height:50px; width:100%; border-bottom:1px solid grey; ">
 				<tr class="info_today" style="background-color: white">
 					<th class="textleft textbottom" style="width: 45%">
 						{{ date }}
@@ -30,9 +30,9 @@
 				</tr>
 			</table>
 		</div>
-			
+
 		<div class="nav">
-			<table style="width:100%; background-color:white; border-top: 2px solid white; border-bottom: 3px double black"> 
+			<table style="width:100%; background-color:white; border-top: 2px solid white; border-bottom: 3px double black">
 				<tr style="height: fixed">
 					<th class="textcenter">
 						<a class="menu_bar hide sticky" href="/">
@@ -58,64 +58,65 @@
 				</tr>
 			</table>
 		</div>
-				
+
 		<section class="timeline" style="padding: 10px; height: 200px; border-bottom: 3px double black">
 			<br>
 			<h1 class="textleft">History in the Headlines > <br><br></h1>
 			<p><img src="{{ url_for('static',filename='images/Timeline.png') }}" alt="Timeline" height="200px" align="middle">
-			</p>	
+			</p>
 		</section>
 
 		<div class="content" style="display: table-row; width:100%;">
-		
-			<div class="left" style="display: table-cell; width:60%;">
-				<h1 class="textleft">Today's Must Reads > <br><br></h1>
-					
-					<article class="daily">
-						<div class="text" id="container">
-							<img id="floated" class="article_img" src="{{ image_url_1 }}" height="300px">
-							<header>
-									<h2>{{ article_title_1 }}<br><br></h2> 
-									<h3><a href="{{ article_url_1 }}" target="_blank">
-										source link</a>
-									</h3>
-									<h4>key words: {{ article_entities_1 }}</h4>
-							</header>
-							<div class="summary">
-								<p>{{ article_summary_1 }}</p>
-							</div>
-						</div>
-						<div class="two_memes">
-							<img id="floated" class="article_img" src="{{ meme_1_pos }}" height="300px">
-							<img id="floated" class="article_img" src="{{ meme_1_neg }}" height="300px">
 
-						</div>
-				
-			</div>
-			
+      <div class="left" style="display: table-cell; width:60%;">
+        <h1 class="textleft">Today's Must Reads > <br><br></h1>
+            {% for article in articles_list %}
+              <article class="daily">
+            <header>
+              <div class="text">
+              <h2>{{ article.title }}</h2>
+              <h3>
+                key words: {{ article.keywords }}
+                <a href="{{ article.url }}" target="_blank">
+                  source link
+                </a>
+              </h3>
+              <img class="article_img" src="{{ article.image }}" height="100px">
+            </div>
+            </header>
+            <section class="summary">
+              <p>{{ article.summary }}</p>
+
+            </section>
+          </article>
+          <img class="article_img" src="{{article.meme_url}}" height="150px">
+          {% endfor %}
+      </div>
+
+
 			<div class="right" style="display: table-cell; width:40%;">
 				<h1 class="textleft">Topics of the Day > <br><br></h1>
 				<article class="daily">
 					<h2>
 						[most appeared entity]{{ most_appeared_entity }}
 					</h2>
-					
+
 					<p>
 					graph? and repeat?<br>
 					<br><br><br><br><br><br><br><br>
-					
+
 					<br><br><br><br><br><br><br><br>
 					<br><br><br><br><br><br><br><br>
 					</p>
 				</article>
 			</div>
 		</div>
-	
-		
-		
+
+
+
 		<footer>
 			<table style="width: 100%; border-top: 3px double black;">
-				<tr> 
+				<tr>
 					<td style="left: 0; text-align: left; width: 50%">
 						© 2018 The MemeTimes Company
 					</td>
@@ -133,6 +134,6 @@
 			<br>
 		</footer>
     </body>
-	
-	
+
+
 </html>
