@@ -15,9 +15,9 @@
 		"api-key": "your-api-key"
 	},
 	"SQL": {
-		"host" : "your-host-address",
-		"user" : "your-user",
-		"password": "your-password"
+		"host" : "35.237.95.123",
+		"user" : "root",
+		"password": "yankees7&"
 	},
 	"img" : {
 		"username": "your-username",

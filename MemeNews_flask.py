@@ -36,7 +36,9 @@ for index, row in df_memes_.iterrows():
     if (index %2 ==0): 
         query = '''SELECT * FROM MemeNews.Daily_Articles WHERE id LIKE '{0}' LIMIT 1'''.format(row['post_id'])
         df_article = pd.read_sql(query, engine)
-        df_dict = df_article.iloc[0].to_dict()
+        df_dict=[]
+        for item in df_article.iloc[0:10]:
+            df_dict.append(item.to_dict())
 # df_dict['title'], df_dict['url'], df_dict['image'], df_dict['body']
 
 @app.route('/', methods=['GET', "POST"])
@@ -49,18 +51,17 @@ def home():
         a = pd.Series(grouped.post_id)
         a.index = grouped.index
         a.plot()
-        timeline = plt.savefig('Timeline')
+        plt.savefig('images/Timeline.png')
+        
     
-        con = engine.connect()
-        con.close()
+    con = engine.connect()
+    con.close()
 
-        return render_template("MemeNews.htm", date = today, 
-                               article_title_1 = df_dict['title'],
-                               image_url_1 = df_dict['image'],
-                               article_entities_1 = df_dict['keywords'],
-                               article_url_1 = df_dict['url'],
-                               article_summary_1 = df_dict['summary'],
+
+    return render_template("MemeNews.htm", date = today, 
+                               df_dict=df_dict,
                                timeline = timeline)
+
 
 @app.route('/Article')
 def MemeNews_article():
@@ -103,7 +104,7 @@ def chatReddit():
 	if userInput:
 		output=return_response(userInput)
 		chatHistory[userInput]=output
-	return render_template('MemeNews_askReddit.html',userInput=userInput, output=output,chatHistory=chatHistory, date = today)
+	return render_template('MemeNews_askReddit.html',userInput=userInput, output=output, chatHistory=chatHistory, date = today)
 		
 
 @app.route('/Subscribe')

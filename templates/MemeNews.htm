@@ -33,17 +33,17 @@
 			
 		<div class="nav">
 			<table style="width:100%; background-color:white; border-top: 2px solid white; border-bottom: 3px double black"> 
-				<tr height='fixed'>
+				<tr style="height: fixed">
 					<th class="textcenter">
 						<a class="menu_bar hide sticky" href="/">
 							<img src="{{ url_for('static',filename='images/logo_simple.png') }}" height="16px">
 						</a>
 					</th>
 					<th class="textcenter"><a class="menu_bar" href="PastArticles">Past Articles</a></th>
-					<th class="textcenter"><a class="menu_bar" href="TheWorldInMemes">The World in Memes</a></th>
+
 					<th class="textcenter">
 						<div class="dropdown">
-							<button class="menu_bar dropbtn">Meme Analysis</button>
+							<button class="menu_bar dropbtn" style="height: 15px;">Meme Analysis</button>
 							<div class="dropdown-content">
 								<a href="MemeAnalysis_Articles">
 									Articles</a>
@@ -62,7 +62,8 @@
 		<section class="timeline" style="padding: 10px; height: 200px; border-bottom: 3px double black">
 			<br>
 			<h1 class="textleft">History in the Headlines > <br><br></h1>
-			<p>{{ timeline }}</p>	
+			<p><img src="{{ url_for('static',filename='images/Timeline.png') }}" alt="Timeline" height="200px" align="middle">
+			</p>	
 		</section>
 
 		<div class="content" style="display: table-row; width:100%;">
@@ -71,25 +72,25 @@
 				<h1 class="textleft">Today's Must Reads > <br><br></h1>
 					
 					<article class="daily">
-						<header>
-							<div class="text">
-							<h2>{{ article_title_1 }}</h2> 
-							<h3>
-								key words: {{ article_entities_1 }}
-								<a href="{{ article_url_1 }}" target="_blank">
-									source link
-								</a>
-							</h3>
-							
-							<img class="article_img" src="{{ image_url_1 }}" height="100px">
-						</header>
-						<section class="summary">
-							<p>{{ article_summary_1 }}</p>
-							
-						</section>
-					</article>
+						<div class="text" id="container">
+							<img id="floated" class="article_img" src="{{ image_url_1 }}" height="300px">
+							<header>
+									<h2>{{ article_title_1 }}<br><br></h2> 
+									<h3><a href="{{ article_url_1 }}" target="_blank">
+										source link</a>
+									</h3>
+									<h4>key words: {{ article_entities_1 }}</h4>
+							</header>
+							<div class="summary">
+								<p>{{ article_summary_1 }}</p>
+							</div>
+						</div>
+						<div class="two_memes">
+							<img id="floated" class="article_img" src="{{ meme_1_pos }}" height="300px">
+							<img id="floated" class="article_img" src="{{ meme_1_neg }}" height="300px">
 
-
+						</div>
+				
 			</div>
 			
 			<div class="right" style="display: table-cell; width:40%;">
