@@ -11,12 +11,13 @@ from sqlalchemy import create_engine
 import json
 import os
 from datetime import datetime
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
 today = datetime.now().strftime("%A, %B %d, %Y")
 
-#AUTH 
+#AUTH
 with open('config.json') as f:
     data = json.load(f)
 reddit_cred = data['Reddit']
@@ -24,44 +25,40 @@ watson_cred = data['Watson']
 newspaper_cred = data['News']
 img_cred = data["img"]
 
-
 engine = create_engine("mysql://root:yankees7&@35.237.95.123:3306/MemeNews")
 
 #grab the memes & the associated article
-query = '''SELECT * FROM MemeNews.Memes'''
+query = '''SELECT * FROM MemeNews.Memes LIMIT 3'''
 df = pd.read_sql('''SELECT * FROM MemeNews.every_comment''', engine)
 df_memes_ = pd.read_sql(query, engine)
 df_dict = {}
 for index, row in df_memes_.iterrows():
-    if (index %2 ==0): 
+    if (index %2 ==0):
         query = '''SELECT * FROM MemeNews.Daily_Articles WHERE id LIKE '{0}' LIMIT 1'''.format(row['post_id'])
         df_article = pd.read_sql(query, engine)
-        df_dict=[]
-        for item in df_article.iloc[0:10]:
-            df_dict.append(item.to_dict())
-# df_dict['title'], df_dict['url'], df_dict['image'], df_dict['body']
+        df_dict = df_article.iloc[0].to_dict()
 
 @app.route('/', methods=['GET', "POST"])
 def home():
-    def create_timeline(df):
-        df['created'] = pd.to_datetime(df['created'], unit='s')
-        grouped = df.groupby(df.created.dt.date).count()
-        grouped.set_index('created')
+    df['created'] = pd.to_datetime(df['created'], unit='s')
+    grouped = df.groupby(df.created.dt.date).count()
+    grouped.set_index('created')
 
-        a = pd.Series(grouped.post_id)
-        a.index = grouped.index
-        a.plot()
-        plt.savefig('images/Timeline.png')
-        
-    
+    a = pd.Series(grouped.post_id)
+    a.index = grouped.index
+    a.plot()
+    timeline = plt.savefig('Timeline')
+
     con = engine.connect()
     con.close()
 
-
-    return render_template("MemeNews.htm", date = today, 
-                               df_dict=df_dict,
-                               timeline = timeline)
-
+    return render_template("MemeNews.htm", date = today,
+                           article_title_1 = df_dict['title'],
+                           image_url_1 = df_dict['image'],
+                           article_entities_1 = df_dict['keywords'],
+                           article_url_1 = df_dict['url'],
+                           article_summary_1 = df_dict['summary'],
+                           timeline = timeline)
 
 @app.route('/Article')
 def MemeNews_article():
@@ -96,7 +93,7 @@ def askReddit():
 	return render_template('MemeNews_askReddit.html', chatHistory=chatHistory, date = today)
 
 @app.route('/ChatReddit', methods=['GET', 'POST'])
-def chatReddit():	
+def chatReddit():
 	if request.method== 'GET':
 		return redirect('/AskReddit')
 	userInput=request.form['userInput']
@@ -104,8 +101,8 @@ def chatReddit():
 	if userInput:
 		output=return_response(userInput)
 		chatHistory[userInput]=output
-	return render_template('MemeNews_askReddit.html',userInput=userInput, output=output, chatHistory=chatHistory, date = today)
-		
+	return render_template('MemeNews_askReddit.html',userInput=userInput, output=output,chatHistory=chatHistory, date = today)
+
 
 @app.route('/Subscribe')
 def MemeNews_subscribe():
