@@ -85,12 +85,17 @@
             </div>
             </header>
             <section class="summary">
-              <p>{{ article.summary }}</p>
-
+              <pre>{{ article.summary }}</pre>
             </section>
+            <section>
+              <br>
+              <img class="meme_img_left" src="{{article.meme_urls[0]}}" height="200px">
+              <br>
+              <img class="meme_img_right" src="{{article.meme_urls[1]}}" height="200px">
+              <br>
+                  </section>
           </article>
-          <img class="article_img" src="{{article.meme_url}}" height="150px">
-          {% endfor %}
+              {% endfor %}
       </div>
 
 
