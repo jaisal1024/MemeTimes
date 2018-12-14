@@ -22,7 +22,7 @@ def scrape_reddit(reddit, engine, limit_, yest):
             if (submission.created > yest):
                 query_comments = '''SELECT EXISTS(SELECT * FROM MemeNews.every_comment  WHERE post_id LIKE '{0}' LIMIT 1)'''.format(submission.id)
                 query_articles = '''SELECT EXISTS(SELECT * FROM MemeNews.Daily_Articles  WHERE id LIKE '{0}' LIMIT 1)'''.format(submission.id)
-                if (engine.execute(query_articles)):
+                if (engine.execute(query_articles).fetchone()[0]):
                     continue
                 submission.comment_sort = 'best'
                 article = Article(submission.url)
@@ -48,8 +48,8 @@ def scrape_reddit(reddit, engine, limit_, yest):
                 #add articles
                 articles_data = pd.DataFrame(articles_dict, index = [i])
                 articles_data.to_sql('Daily_Articles', con = engine, if_exists='append', dtype={'None':VARCHAR(5)})
-                print("article added")
-                if (engine.execute(query_comments)):
+                print("article added with url: ", submission.url)
+                if (engine.execute(query_comments).fetchone()[0]):
                     continue
                 comment_dict = {
                     "post_id":[],
@@ -75,24 +75,28 @@ def scrape_reddit(reddit, engine, limit_, yest):
                     except:
                         continue
                 comment_data = pd.DataFrame(comment_dict)
-                comment_data.to_sql('every_test_comment', con = engine, if_exists='append', dtype={'None':VARCHAR(5)})
+                comment_data.to_sql('every_comment', con = engine, if_exists='append', dtype={'None':VARCHAR(5)})
                 print("comments added")
                 i+=1
         return 1
-    except:
+    except err:
+        print(err)
         return 0
 
 def generateMeme(num, raw, engine, watson_cred, yest, meme_py):
     query = '''SELECT * FROM MemeNews.Daily_Articles WHERE created > {0} ORDER BY score DESC LIMIT {1}'''.format(yest, 2*num)
     df_articles = pd.read_sql(query, engine)
-    df = pd.DataFrame(columns = ["post_id", "meme_url", "sentiment"])
+    df = pd.DataFrame(columns = ["post_id", "meme_url", "sentiment", "timestamp"])
     j = 0
     k = 0
     while(j < num+1 and k < df_articles.shape[0]):
         id_ = df_articles["id"][k]
         k+=1
-        query = '''SELECT * FROM MemeNews.every_comment WHERE post_id LIKE '{0}' LIMIT 10'''.format(id_)
-        df_comments =  pd.read_sql(query, engine)
+        query_exists = '''SELECT EXISTS(SELECT * FROM MemeNews.Memes_Test WHERE post_id = '{0}' )'''.format(id_)
+        if (engine.execute(query_exists).fetchone()[0]):
+            continue
+        query_comment = '''SELECT * FROM MemeNews.every_comment WHERE post_id LIKE '{0}' LIMIT 10'''.format(id_)
+        df_comments =  pd.read_sql(query_comment, engine)
         if (len(df_comments) < 3):
             continue
         max_emotion_final = [('Joy', -1, df_comments["body"][0]),('Disgust', -1, df_comments["body"][0])]
@@ -137,13 +141,15 @@ def generateMeme(num, raw, engine, watson_cred, yest, meme_py):
                     senti.append('positive')
                 i+=1
 
-        meme_dict = {"post_id": id_, "meme_url": urls, "sentiment": senti}
+        meme_dict = {"post_id": id_, "meme_url": urls, "sentiment": senti, "timestamp": time.time()}
         temp = pd.DataFrame(meme_dict, index = [2*j, 2*j+1])
         df = df.append(temp)
         j+=1
 
-    df.to_sql('Memes', con = engine, if_exists='replace', dtype={'None':VARCHAR(5)})
-return 1
+    if (df.shape[0] < 1):
+        return 0
+    df.to_sql('Memes_Test', con = engine, if_exists='append', dtype={'None':VARCHAR(5)})
+    return 1
 
 def extractEntitiesFromUrl(url, watson_cred):
     endpoint_watson = "https://gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze"
