@@ -123,7 +123,7 @@ def MemeNews_article():
 @app.route('/PastArticles')
 def MemeNews_pa():
     con = engine.connect()
-    articles = con.execute("SELECT DISTINCT title, summary, url FROM MemeNews.every_article")
+    articles = con.execute("SELECT DISTINCT title, summary, url FROM MemeNews.Daily_Articles")
     con.close()
     return render_template("MemeNews_pa.html", every_article = articles, date = today)
 
