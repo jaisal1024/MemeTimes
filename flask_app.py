@@ -31,7 +31,7 @@ engine = create_engine("mysql://root:yankees7&@35.237.95.123:3306/MemeNews")
 
 #grab the memes & the associated article
 articles_list = []
-query = '''SELECT * FROM MemeNews.Memes ORDER BY post_id LIMIT 10'''
+query = '''SELECT * FROM MemeNews.Memes ORDER BY timestamp DESC,post_id LIMIT 10'''
 df = pd.read_sql('''SELECT * FROM MemeNews.every_comment''', engine)
 df['created'] = pd.to_datetime(df['created'], unit='s')
 df_memes_ = pd.read_sql(query, engine)
@@ -127,9 +127,6 @@ def MemeNews_pa():
     con.close()
     return render_template("MemeNews_pa.html", every_article = articles, date = today)
 
-@app.route('/TheWorldInMemes')
-def MemeNews_twim():
-    return render_template("MemeNews_twim.html", date = today)
 
 @app.route('/MemeAnalysis_Articles')
 def MemeNews_ma_articles():
@@ -159,15 +156,12 @@ def chatReddit():
 		chatHistory[userInput]=output
 	return render_template('MemeNews_askReddit.html',userInput=userInput, output=output,chatHistory=chatHistory, date = today)
 
-
 @app.route('/Subscribe', methods=["GET", "POST"])
 def MemeNews_subscribe():
     if request.method=='GET':
         return render_template("MemeNews_subscribe.html", date = today)
     elif request.method=='POST':
         return render_template("MemeNews_subscribe.html", date= today, thanks='Thank you for subscribing to MemeTimes newsletter!')
-
-
 
 @app.route('/TermsOfService')
 def MemeNews_tos():
@@ -178,4 +172,4 @@ def MemeNews_sm():
     return render_template("MemeNews_sm.html", date = today)
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

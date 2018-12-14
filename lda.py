@@ -8,6 +8,7 @@ import praw
 import json
 import matplotlib.pyplot as plt
 from sklearn.metrics.pairwise import euclidean_distances
+
 with open('config.json') as f:
     data = json.load(f)
 reddit_cred = data['Reddit']
@@ -23,11 +24,11 @@ conn_string = 'mysql://{user}:{password}@{host}/{db}?charset=utf8mb4'.format(
     db = 'MemeNews')
 engine = create_engine(conn_string)
 
-q = '''select * from every_comment'''
+q = '''SELECT * from MemeNews.every_comment Order BY rand()'''
 
 df = pd.read_sql(q, con = engine)
 df['created'] = pd.to_datetime(df['created'], unit='s')
-documents = list(df.body)[:100]
+documents = list(df.body)[:20000]
 
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 
@@ -60,7 +61,7 @@ x_lda = lda.transform(tf)
 
 
 from sklearn.metrics.pairwise import euclidean_distances
- 
+
 def most_similar(x, Z, top_n=5):
     dists = euclidean_distances(x.reshape(1, -1), Z)
     pairs = enumerate(dists[0])
