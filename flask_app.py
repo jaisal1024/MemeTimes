@@ -1,26 +1,27 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-from flask import Flask, Markup, render_template, request, session, url_for, redirect
-from flask_bootstrap import Bootstrap
-from lda import return_response
-import pandas as pd
-from bokeh.io import save
-import re
-from sqlalchemy import create_engine
+import sys
 import json
 import os
+import re
+from flask import Flask, Markup, render_template, request, session, url_for, redirect
+from flask_bootstrap import Bootstrap
+from scripts.lda import return_response
+import pandas as pd
+from bokeh.io import save
+from sqlalchemy import create_engine
 from datetime import datetime
 import matplotlib.pyplot as plt
 app = Flask(__name__)
-from make_plot_for import generate_lda_for
-today = datetime.now().strftime("%A, %B %d, %Y")
+from scripts.make_plot_for import generate_lda_for
 from bokeh.plotting import figure, show, output_file, output_notebook
 from bokeh.palettes import Spectral11, colorblind, Inferno, BuGn, brewer
 from bokeh.models import HoverTool, value, LabelSet, Legend, ColumnDataSource,LinearColorMapper,BasicTicker, PrintfTickFormatter, ColorBar
 
+today = datetime.now().strftime("%A, %B %d, %Y")
+
 #AUTH
-with open('config.json') as f:
+with open('scripts/config.json') as f:
     data = json.load(f)
 reddit_cred = data['Reddit']
 watson_cred = data['Watson']
@@ -29,9 +30,9 @@ newspaper_cred = data['News']
 
 engine = create_engine("mysql://root:yankees7&@35.237.95.123:3306/MemeNews")
 
-#grab the memes & the associated article
+#grab the memes & the associated articles for front page
 articles_list = []
-query = '''SELECT * FROM MemeNews.Memes ORDER BY timestamp DESC,post_id LIMIT 10'''
+query = '''SELECT * FROM MemeNews.Memes_Test ORDER BY timestamp DESC,post_id LIMIT 10'''
 df = pd.read_sql('''SELECT * FROM MemeNews.every_comment''', engine)
 df['created'] = pd.to_datetime(df['created'], unit='s')
 df_memes_ = pd.read_sql(query, engine)
@@ -84,7 +85,6 @@ def create_timeline(df):
     output_file("barchart.html", title="barchart")
     save(p)
 create_timeline(df)
-print(articles_list[0]["meme_urls"], articles_list[4]["meme_urls"])
 
 for i in range(len(articles_list)):
     post_id = articles_list[i]['id']

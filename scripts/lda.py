@@ -9,7 +9,7 @@ import json
 import matplotlib.pyplot as plt
 from sklearn.metrics.pairwise import euclidean_distances
 
-with open('config.json') as f:
+with open('scripts/config.json') as f:
     data = json.load(f)
 reddit_cred = data['Reddit']
 watson_cred = data['Watson']
