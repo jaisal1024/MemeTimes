@@ -1,5 +1,5 @@
 # MemeTimes
-Team Members: Jaisal Friedman, Ashley Tsoi, Artem Dovzhenko, Komiljon Turdaliyev \n
+Team Members: Jaisal Friedman, Ashley Tsoi, Artem Dovzhenko, Komiljon Turdaliyev <br/>
 Project Submission Hosted on VM at: http://35.199.18.22:5000
 
 ## Code Base
