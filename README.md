@@ -1,6 +1,6 @@
 # MemeTimes
 Team Members: Jaisal Friedman, Ashley Tsoi, Artem Dovzhenko, Komiljon Turdaliyev
-Project Submission Hosted on VM at: http://35.199.18.22:8888/tree/MemeNews
+Project Submission Hosted on VM at: http://35.199.18.22:5000
 
 ## Code Base
 1. 'flask_app.py' : flask python script that runs server in development. This is where the front-end connects to the databases and scripts
